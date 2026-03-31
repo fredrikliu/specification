@@ -1,14 +1,25 @@
-*.swp
-.vscode/*
-.DS_Store
-target
-.idea
+# === IDE / 编辑器 ===
 *.iml
-source/python/dist
-source/rust/polaris-specification/target
-venv
+*.swp
+.codebuddy/
+.idea/
+.vscode/
+
+# === 操作系统 ===
+.DS_Store
+
+# === 调试 / 临时 ===
 debug/
-target/
-# Maven ignore
+openspec
+
+# === Java / Maven ===
 .flattened-pom.xml
+target/
+
+# === Python ===
+source/python/dist
+venv/
+
+# === Rust ===
 Cargo.lock
+source/rust/polaris-specification/target

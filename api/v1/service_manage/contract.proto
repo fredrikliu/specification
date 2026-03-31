@@ -38,6 +38,9 @@ message ServiceContract {
   map<string, string> metadata = 15;
   // 内容摘要
   string content_digest = 16 [ json_name = "content_digest" ];
+
+  // 服务功能列表
+  repeated ServiceFeature service_features = 20;
 }
 
 message InterfaceDescriptor {
@@ -78,4 +81,46 @@ message InterfaceDescriptor {
   string type = 14;
   // 内容摘要
   string content_digest = 15 [ json_name = "content_digest" ];
+}
+
+// 服务功能
+message ServiceFeature {
+  // 功能ID
+  string id = 1;
+  // 功能类型
+  ServiceFeatureType type = 2;
+  // 功能名称
+  string name = 3;
+  // 功能描述
+  string description = 4;
+  // 功能内容（JSON 格式）
+  string content = 5;
+  // 功能状态
+  ServiceFeatureStatus status = 6;
+  // 创建时间
+  string ctime = 7;
+  // 更新时间
+  string mtime = 8;
+}
+
+// 服务功能类型枚举
+enum ServiceFeatureType {
+  // 微服务未知类型（默认值）
+  Service_Feature_Type_MS_Unknown = 0;
+  // MCP Server 未知类型
+  Service_Feature_Type_MCP_Unknown = 100;
+  // MCP Tool 服务
+  Service_Feature_Type_MCP_Tool = 101;
+  // MCP Resource 服务
+  Service_Feature_Type_MCP_Resource = 102;
+  // MCP Prompt 服务
+  Service_Feature_Type_MCP_Prompt = 103;
+}
+
+// 服务功能状态枚举
+enum ServiceFeatureStatus {
+  // 启用
+  Service_Feature_Status_Enabled = 0;
+  // 禁用
+  Service_Feature_Status_Disabled = 1;
 }

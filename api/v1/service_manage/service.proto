@@ -49,6 +49,19 @@ message Service {
   ServiceStatus service_status = 28 [json_name = "service_status"];
 
   google.protobuf.BoolValue deleteable = 100;
+
+  // 服务类型，例如：微服务、MCP Server、AI Agent等
+  ServiceType service_type = 101 [json_name = "service_type"];
+}
+
+// 服务类型枚举
+enum ServiceType {
+  // 微服务（默认值）
+  SERVICE_TYPE_MICROSERVICE = 0;
+  // MCP Server，通过 MCP （SSE / Streamable HTTP）提供 AI 工具能力
+  SERVICE_TYPE_MCP_SERVER = 1;
+  // AI Agent，具有自主决策能力的智能体服务
+  SERVICE_TYPE_AI_AGENT = 2;
 }
 
 enum ServiceStatus {
@@ -89,8 +102,16 @@ message Instance {
   google.protobuf.StringValue vpc_id = 21 [json_name = "vpc_id"];
   google.protobuf.StringValue host = 4;
   google.protobuf.UInt32Value port = 5;
+
+  // 通信协议类型
+  // MCP Server 使用以下协议类型：
+  //   - "mcp-sse"：基于 Server-Sent Events 的 MCP 传输协议
+  //   - "mcp-streamable-http"：基于 Streamable HTTP 的 MCP 传输协议
   google.protobuf.StringValue protocol = 6;
+  // 服务版本
+  // MCP Server 使用 mcp-server-version，不是 mcp-protocol-version
   google.protobuf.StringValue version = 7;
+
   google.protobuf.UInt32Value priority = 8;
   google.protobuf.UInt32Value weight = 9;
   google.protobuf.BoolValue enable_health_check = 20;
@@ -99,7 +120,13 @@ message Instance {
   google.protobuf.BoolValue isolate = 12;
   Location location = 13;
 
+  // 实例元数据
+  // MCP Server 使用以下标准键：
+  //   - "mcp-server-name"：MCP Server 的名称，等于 service。必填
+  //   - "mcp-protocol-version"：MCP 协议版本，例如："2025-03-26"。可选
+  //   - "mcp-endpoint-path"：MCP Server 的服务端点路径，例如："/mcp"、"/sse"。可选
   map<string, string> metadata = 14;
+
   google.protobuf.StringValue logic_set = 15 [json_name = "logic_set"];
 
   google.protobuf.StringValue ctime = 16;
